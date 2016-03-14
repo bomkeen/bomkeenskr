@@ -8,6 +8,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 $daterent=  date('Y-m-d');
+
+
 ?>
 
 <?php if(Yii::$app->session->hasFlash('alert')):?>
