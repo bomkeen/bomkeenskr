@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-class DentController extends \yii\web\Controller
+class ReportdentController extends \yii\web\Controller
 {
     public function actionIndex()
     {
