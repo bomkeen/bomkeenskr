@@ -42,11 +42,11 @@ FROM dtmain AS dt WHERE dt.vstdate BETWEEN '$date1' AND '$date2'";
        $anc_sql="SELECT COUNT(s.vn) as cc
 ,COUNT(DISTINCT s.person_anc_id) as dissum FROM person_anc_service as s
 WHERE s.anc_service_date BETWEEN '$date1' and '$date2'";
-        $rsall = \Yii::$app->hosxp->createCommand("$all_sql")->queryAll();
-        $rsopd_all = \Yii::$app->hosxp->createCommand("$opd_all")->queryAll();
-        $er = \Yii::$app->hosxp->createCommand("$er_sql")->queryAll();
-        $rsdent = \Yii::$app->hosxp->createCommand("$dent_sql")->queryAll();
-        $rsanc = \Yii::$app->hosxp->createCommand("$anc_sql")->queryAll();
+        $rsall = \Yii::$app->hosxpslave->createCommand("$all_sql")->queryAll();
+        $rsopd_all = \Yii::$app->hosxpslave->createCommand("$opd_all")->queryAll();
+        $er = \Yii::$app->hosxpslave->createCommand("$er_sql")->queryAll();
+        $rsdent = \Yii::$app->hosxpslave->createCommand("$dent_sql")->queryAll();
+        $rsanc = \Yii::$app->hosxpslave->createCommand("$anc_sql")->queryAll();
         return $this->render('sumopd',[
             'date1'=>$date1,
             'date2'=>$date2,
@@ -77,7 +77,7 @@ WHERE s.anc_service_date BETWEEN '$date1' and '$date2'";
 	v.icd10 = i.code AND ( v.icd10 NOT like 'V%' AND v.icd10 NOT like 'W%' AND v.icd10 NOT like 'X%'
 AND v.icd10 NOT like 'Y%' AND v.icd10 NOT like 'Z%') AND v.vstdate 
 BETWEEN '$date1' and '$date2' GROUP BY v.icd10,i.name ORDER BY n DESC LIMIT 20";
-         $rs = \Yii::$app->hosxp->createCommand("$sql")->queryAll();
+         $rs = \Yii::$app->hosxpslave->createCommand("$sql")->queryAll();
               $dataProvider = new \yii\data\ArrayDataProvider([
             //'key' => 'hoscode',//
             'allModels' => $rs,

@@ -17,13 +17,13 @@ class ReportController extends \yii\web\Controller
 		return "$strDay $strMonthThai $strYear";
 	}
         $date=  thaidate($data);
-        $rsbox1 = \Yii::$app->hosxp->createCommand("select count(*) as n FROM ovst WHERE vstdate=date(now())")->queryAll();
-        $rsbox2 = \Yii::$app->hosxp->createCommand("SELECT count(*) as n FROM an_stat where dchdate IS NULL")->queryAll();
-        $rsbox3 = \Yii::$app->hosxp->createCommand("SELECT COUNT(*) as n FROM oapp WHERE nextdate = DATE(now())")->queryAll();
-        $rsbox4 = \Yii::$app->hosxp->createCommand("SELECT COUNT(*) as n FROM er_regist WHERE vstdate = DATE(now())")->queryAll();
+        $rsbox1 = \Yii::$app->hosxpslave->createCommand("select count(*) as n FROM ovst WHERE vstdate=date(now())")->queryAll();
+        $rsbox2 = \Yii::$app->hosxpslave->createCommand("SELECT count(*) as n FROM an_stat where dchdate IS NULL")->queryAll();
+        $rsbox3 = \Yii::$app->hosxpslave->createCommand("SELECT COUNT(*) as n FROM oapp WHERE nextdate = DATE(now())")->queryAll();
+        $rsbox4 = \Yii::$app->hosxpslave->createCommand("SELECT COUNT(*) as n FROM er_regist WHERE vstdate = DATE(now())")->queryAll();
         /////////////////2 Row
-        $rsbox5 = \Yii::$app->hosxp->createCommand("SELECT COUNT(*) as n FROM dtmain WHERE vstdate = DATE(now())")->queryAll();
-        $rsbox6 = \Yii::$app->hosxp->createCommand("SELECT count(v.vn) as n  from ovst v 
+        $rsbox5 = \Yii::$app->hosxpslave->createCommand("SELECT COUNT(*) as n FROM dtmain WHERE vstdate = DATE(now())")->queryAll();
+        $rsbox6 = \Yii::$app->hosxpslave->createCommand("SELECT count(v.vn) as n  from ovst v 
 JOIN clinic_visit cv on cv.vn=v.vn WHERE v.vstdate =DATE(now())")->queryAll();
         
         return $this->render('index',[

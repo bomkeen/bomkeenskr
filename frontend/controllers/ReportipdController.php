@@ -28,7 +28,7 @@ WHERE (v.icd10 NOT like 'V%' AND v.icd10 NOT like 'W%' AND v.icd10 NOT like 'X%'
 AND v.icd10 NOT like 'Y%' AND v.icd10 NOT like 'Z%')
 AND ipt.dchdate BETWEEN '$date1' and '$date2' GROUP BY v.icd10,i.name
 ORDER BY n DESC LIMIT 20";
-         $rs = \Yii::$app->hosxp->createCommand("$sql")->queryAll();
+         $rs = \Yii::$app->hosxpslave->createCommand("$sql")->queryAll();
               $dataProvider = new \yii\data\ArrayDataProvider([
             //'key' => 'hoscode',//
             'allModels' => $rs,
@@ -58,78 +58,78 @@ ORDER BY n DESC LIMIT 20";
             $year=$request->post('year');
             $date1=((int) $year - 1).'-10-01';
             $date2 = $year.'-9-30';
-          $m = \Yii::$app->hosxp->createCommand("SELECT a.dchdate as m FROM an_stat a
+          $m = \Yii::$app->hosxpslave->createCommand("SELECT a.dchdate as m FROM an_stat a
 WHERE a.dchdate  BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate) ORDER BY a.dchdate")->queryAll();  
           //อัตราการตาย
-          $d_m=\Yii::$app->hosxp->createCommand("SELECT 
+          $d_m=\Yii::$app->hosxpslave->createCommand("SELECT 
 FORMAT(((COUNT(d.hn)*1000)/COUNT(a.vn)),2) AS cc
 FROM an_stat a
 LEFT OUTER JOIN death as d on d.an=a.an
 WHERE a.dchdate  BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate) ORDER BY a.dchdate")->queryAll();
-          $d=\Yii::$app->hosxp->createCommand("SELECT 
+          $d=\Yii::$app->hosxpslave->createCommand("SELECT 
 FORMAT(((COUNT(d.hn)*1000)/COUNT(a.vn)),2) as cc
 FROM an_stat a
 LEFT OUTER JOIN death as d on d.an=a.an
 WHERE a.dchdate  BETWEEN '$date1' AND '$date2' ORDER BY a.dchdate")->queryAll(); 
           /// อัตราครองเตียง
-          $bed_m=\Yii::$app->hosxp->createCommand("SELECT 
+          $bed_m=\Yii::$app->hosxpslave->createCommand("SELECT 
 format(((SUM(a.admdate_cut24)*100)/(30*DATE_FORMAT(LAST_DAY(a.dchdate), '%e') )),2) as cc
 FROM an_stat a
 WHERE a.dchdate  BETWEEN '$date1' AND '$date2' GROUP BY MONTH(a.dchdate) ORDER BY a.dchdate")->queryAll(); 
-          $bed=\Yii::$app->hosxp->createCommand("SELECT FORMAT(((SUM(a.admdate_cut24)*100)/(30*365)),2) as cc
+          $bed=\Yii::$app->hosxpslave->createCommand("SELECT FORMAT(((SUM(a.admdate_cut24)*100)/(30*365)),2) as cc
 FROM an_stat a
 WHERE a.dchdate  BETWEEN '$date1' AND '$date2' ORDER BY a.dchdate")->queryAll(); 
           //อัตราการใช้เตียง
-           $bed_use_m=\Yii::$app->hosxp->createCommand("SELECT 
+           $bed_use_m=\Yii::$app->hosxpslave->createCommand("SELECT 
 format((count(a.an)/30),2) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate) ORDER BY a.dchdate")->queryAll();
-            $bed_use=\Yii::$app->hosxp->createCommand("SELECT 
+            $bed_use=\Yii::$app->hosxpslave->createCommand("SELECT 
 format((count(a.an)/30),2) as cc                      
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2' ORDER BY a.dchdate")->queryAll();
         //วันนอนเฉลี่ย
-          $day_m=\Yii::$app->hosxp->createCommand("SELECT 
+          $day_m=\Yii::$app->hosxpslave->createCommand("SELECT 
 format(SUM(a.admdate_cut24)/COUNT(a.an),2) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate)
 ORDER BY a.dchdate")->queryAll();
-           $day=\Yii::$app->hosxp->createCommand("SELECT 
+           $day=\Yii::$app->hosxpslave->createCommand("SELECT 
 format(SUM(a.admdate_cut24)/COUNT(a.an),2) as cc                     
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 ORDER BY a.dchdate")->queryAll(); 
        //วันนอนรวม
-          $day_sum=\Yii::$app->hosxp->createCommand("SELECT 
+          $day_sum=\Yii::$app->hosxpslave->createCommand("SELECT 
 format(SUM(a.admdate_cut24),0) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate)
 ORDER BY a.dchdate")->queryAll(); 
-           $day_sum_y=\Yii::$app->hosxp->createCommand("SELECT 
+           $day_sum_y=\Yii::$app->hosxpslave->createCommand("SELECT 
 format(SUM(a.admdate_cut24),0) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 ORDER BY a.dchdate")->queryAll(); 
      ////// จำนวนผู้ป่วยใน
-              $man_sum=\Yii::$app->hosxp->createCommand("SELECT 
+              $man_sum=\Yii::$app->hosxpslave->createCommand("SELECT 
 count(DISTINCT a.an) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 GROUP BY MONTH(a.dchdate)
 ORDER BY a.dchdate")->queryAll();
-              $man_y=\Yii::$app->hosxp->createCommand("SELECT 
+              $man_y=\Yii::$app->hosxpslave->createCommand("SELECT 
 count(DISTINCT a.an) as cc
 FROM an_stat as a
 WHERE a.dchdate BETWEEN '$date1' AND '$date2'
 ORDER BY a.dchdate")->queryAll(); 
               
               ////readmit
-              $re_ratio=\Yii::$app->hosxp->createCommand("SELECT
+              $re_ratio=\Yii::$app->hosxpslave->createCommand("SELECT
 format(((SUM(CASE WHEN (TO_DAYS(an2.dchdate)-TO_DAYS(an.dchdate)) BETWEEN 0 AND 28 AND an.pdx=an2.pdx THEN 1 ELSE 0 END)*100)/count(an.hn)),2) as re_ratio
 FROM an_stat AS an
 LEFT OUTER JOIN an_stat AS an2 ON an2.hn=an.hn AND an2.an>an.an AND an2.an IS NOT NULL
@@ -137,7 +137,7 @@ WHERE an.dchdate BETWEEN '$date1' AND '$date2'  AND (
 an.pdx NOT LIKE 'V%' AND an.pdx NOT LIKE 'W%' AND an.pdx 
 NOT LIKE 'X%' AND an.pdx NOT LIKE 'Y%' AND an.pdx NOT LIKE 'Z%')
 GROUP BY MONTH(an.dchdate)")->queryAll();
-               $re_ratio_y=\Yii::$app->hosxp->createCommand("SELECT
+               $re_ratio_y=\Yii::$app->hosxpslave->createCommand("SELECT
 format(((SUM(CASE WHEN (TO_DAYS(an2.dchdate)-TO_DAYS(an.dchdate)) BETWEEN 0 AND 28 AND an.pdx=an2.pdx THEN 1 ELSE 0 END)*100)/count(an.hn)),2) as re_ratio
 FROM an_stat AS an
 LEFT OUTER JOIN an_stat AS an2 ON an2.hn=an.hn AND an2.an>an.an AND an2.an IS NOT NULL

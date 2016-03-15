@@ -44,7 +44,7 @@ GROUP BY
 	a.pdx,
 	i.NAME
 ORDER BY	dis DESC LIMIT 20";
-         $rs = \Yii::$app->hosxp->createCommand("$sql")->queryAll();
+         $rs = \Yii::$app->hosxpslave->createCommand("$sql")->queryAll();
               $dataProvider = new \yii\data\ArrayDataProvider([
             //'key' => 'hoscode',//
             'allModels' => $rs,
@@ -97,7 +97,7 @@ ORDER BY	dis DESC LIMIT 20";
   where a.vstdate BETWEEN '2015-10-01' and '2015-10-31'
   group by  a.er_period 
   order by a.vstdate, a.er_period";
-         $rs = \Yii::$app->hosxp->createCommand("$sql")->queryAll();
+         $rs = \Yii::$app->hosxpslave->createCommand("$sql")->queryAll();
             
           return $this->render('detail',[
             'date1'=>$date1,
