@@ -65,4 +65,54 @@ ORDER BY	dis DESC LIMIT 20";
         ]);
         
     }
+    
+    public function actionDetail() {
+         $date1=  date('Y-m-d');
+        $date2=  date('Y-m-d');
+         if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request;
+            $date1 = $request->post('date1');
+            $date2 = $request->post('date2');
+             $sql="select distinct a.er_period,b.name, 
+  count(case when a.er_pt_type = '1' then a.vn end) as 'Pt_1', 
+  count(case when a.er_pt_type = '2' then a.vn end) as 'Pt_2', 
+  count(case when a.er_pt_type = '3' then a.vn end) as 'Pt_3', 
+  count(case when a.er_pt_type not in ('1','2','3') then a.vn end) as 'Pt_4', 
+  count(case when a.er_emergency_type = '1' then a.vn end) as 'Emer_1', 
+  count(case when a.er_emergency_type = '2' then a.vn end) as 'Emer_2', 
+  count(case when a.er_emergency_type = '3' then a.vn end) as 'Emer_3', 
+  count(case when a.er_emergency_type = '4' then a.vn end) as 'Emer_4', 
+  count(case when a.er_emergency_type not in ('1','2','3','4') then a.vn end) as 'Emer_5', 
+  count(case when a.er_dch_type not in ('2','3','4','5','6') then a.vn end) as 'Dch_1', 
+  count(case when a.er_dch_type = '2' then a.vn end) as 'Dch_2', 
+  count(case when a.er_dch_type = '3' then a.vn end) as 'Dch_3', 
+  count(case when a.er_dch_type = '4' then a.vn end) as 'Dch_4', 
+  count(case when a.er_dch_type = '5' then a.vn end) as 'Dch_5', 
+  count(case when a.er_dch_type = '6' then a.vn end) as 'Dch_6', 
+  count(a.vn) as 'VisitTotal', 
+  sum(c.income) as 'MoneyTotal' 
+  from er_regist a 
+  left outer join er_period b on b.er_period = a.er_period 
+  left outer join vn_stat c on c.vn = a.vn 
+  where a.vstdate BETWEEN '2015-10-01' and '2015-10-31'
+  group by  a.er_period 
+  order by a.vstdate, a.er_period";
+         $rs = \Yii::$app->hosxp->createCommand("$sql")->queryAll();
+            
+          return $this->render('detail',[
+            'date1'=>$date1,
+            'date2'=>$date2,
+            'rs'=>$rs,
+        ]);
+         
+         
+         }
+ else {
+        return $this->render('detail',[
+            'date1'=>$date1,
+            'date2'=>$date2,
+           
+        ]);
+ }
+    }
 }

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="list-group">
   
   <a href="<?= \yii\helpers\Url::to(['/erreport/top20']) ?>" class="list-group-item">รายงาน 20 อันดับโรค ER</a>
-  <a href="<?= \yii\helpers\Url::to(['/reportipd/ipdratio']) ?>" class="list-group-item">รายงานสรุปผลการปฏิบัติงานห้อง ER</a>
+  <a href="<?= \yii\helpers\Url::to(['/erreport/detail']) ?>" class="list-group-item">รายงานสรุปผลการปฏิบัติงานห้อง ER</a>
   
 </div>
         </div>
