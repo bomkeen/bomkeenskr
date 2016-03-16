@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-10 col-md-offset-1">
             <div class="list-group">
   
-  <a href="<?= \yii\helpers\Url::to(['/reportncd']) ?>" class="list-group-item">รายงาน 20 อันดับโรค IPD</a>
+  <a href="<?= \yii\helpers\Url::to(['/reportncd/htdmdiag']) ?>" class="list-group-item">จำนวนผู้ป่วยโรคเรื้อรังและโรคร่วม</a>
   <a href="<?= \yii\helpers\Url::to(['/reportncd']) ?>" class="list-group-item">รายงานสถิติผู้ป่วยใน (IPD Ratio)</a>
   
 </div>
