@@ -1,5 +1,6 @@
 <?php
 use kartik\grid\GridView;
+use yii\helpers\Html;
 $this->title = 'จำนวนผู้ป่วยโรคเรื้อรังและโรคร่วม';
 $this->params['breadcrumbs'][] = ['label' => 'ระบบรายงาน', 'url' => ['report/index']];
 $this->params['breadcrumbs'][] = ['label' => 'ระบบรายงาน NCD', 'url' => ['index']];
@@ -51,7 +52,13 @@ include_once '../../inc/thaidate.php';
         ]);
         ?>
         </div>
+                <div class="form-group">
+                    <label for="export">ส่งออก PDF</label>
+                    <input class="form-control" type="radio" id="export" name="export" value="pdf">
+                </div>
+                <div class="form-group">
         <button class='btn btn-danger'>ประมวลผล</button>
+                </div>
     </form>
 </div>
 </div>

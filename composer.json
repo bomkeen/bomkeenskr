@@ -22,6 +22,7 @@
         "pigochu/yii2-jquery-locationpicker": ">=0.2.0",
         "philippfrenzel/yii2fullcalendar":"*",
          "kartik-v/yii2-widgets": "*",
+         "moonlandsoft/yii2-phpexcel": "*",
 "kartik-v/yii2-grid": "*",
 "kartik-v/yii2-export": "*",
 "kartik-v/yii2-mpdf": "*",
