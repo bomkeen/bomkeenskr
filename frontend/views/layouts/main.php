@@ -40,6 +40,7 @@ AppAsset::register($this);
         ['label' => 'GIS', 'url' => ['/gis']],
         ['label' => 'ระบบรายงาน', 'url' => ['/report']],
         ['label' => 'ค้นหา Chart', 'url' => ['/chart']],
+        ['label' => 'backend', 'url'=>\Yii::$app->urlManagerBackend->baseUrl],
         Yii::$app->user->isGuest ?
 ['label' => 'Sign in', 'url' => ['/user/security/login']] :
 ['label' => 'Account(' . Yii::$app->user->identity->username . ')', 'items'=>[

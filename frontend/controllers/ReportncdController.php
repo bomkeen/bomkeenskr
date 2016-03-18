@@ -35,7 +35,7 @@ class ReportncdController extends \yii\web\Controller {
     public function actionHtdmdiag() {
         $date1 = date('Y-m-d');
         $date2 = date('Y-m-d');
-        $export ='test';
+        $export = 'test';
         if (Yii::$app->request->isPost) {
             $request = Yii::$app->request;
             $date1 = $request->post('date1');
@@ -84,7 +84,7 @@ class ReportncdController extends \yii\web\Controller {
                     'date2' => $date2,
                     'rsdm' => $rsdm,
                     'rsht' => $rsht,
-                    'export'=>$export,
+                    'export' => $export,
                 ]);
                 $pdf = new Pdf([
                     'mode' => Pdf::MODE_CORE,
@@ -98,18 +98,38 @@ class ReportncdController extends \yii\web\Controller {
                 return $pdf->render();
             }
             //////////////////////////////////////////////////       
-            
             else {
                 return $this->render('htdmdiag', [
                             'date1' => $date1,
                             'date2' => $date2,
                             'rsht' => $rsht,
                             'rsdm' => $rsdm,
-                            'export'=>$export,
+                            'export' => $export,
                 ]);
             }
         } else {
             return $this->render('htdmdiag', [
+                        'date1' => $date1,
+                        'date2' => $date2,
+            ]);
+        }
+    }
+
+    public function actionHtdetail() {
+        $date1 = date('Y-m-d');
+        $date2 = date('Y-m-d');
+        $export = 'test';
+        if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request;
+            $date1 = $request->post('date1');
+            $date2 = $request->post('date2');
+            $export = $request->post('export');
+            return $this->render('htdetail', [
+                        'date1' => $date1,
+                        'date2' => $date2,
+            ]);
+        } else {
+            return $this->render('htdetail', [
                         'date1' => $date1,
                         'date2' => $date2,
             ]);

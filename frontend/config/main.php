@@ -12,6 +12,24 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+          'urlManager' => [
+            'class' => 'yii\web\urlManager',
+            'enablePrettyUrl' => false,
+            'showScriptName' => true,
+     ],
+        'urlManager' => [
+            'enablePrettyUrl' => FALSE,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
+         'urlManagerBackend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => '/skr/backend/web',
+            'scriptUrl'=>'/skr/backend/web/index.php',
+            'enablePrettyUrl' => false,
+            'showScriptName' => true,
+     ],
         'user' => [
             //'identityClass' => 'common\models\User',
             'identityClass' => 'dektrium\user\models\User',

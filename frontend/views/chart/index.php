@@ -128,7 +128,7 @@ $daterent=  date('Y-m-d');
                 <?= $formrent->field($rent, 'rent_chart_an')->input('hidden',['value'=>$c['an']])?>
                 <?= $formrent->field($rent, 'rent_chart_date')->input('hidden',['value'=>$daterent])?>
 <div class="form-group">
-<?= $formrent->field($rent, 'rent_chart_dep')->radioList(array('opd'=>'OPD','ipd'=>'IPD','er'=>'ER')); ?>
+<?= $formrent->field($rent, 'rent_chart_dep')->radioList(array('opd'=>'OPD','ipd'=>'IPD','er'=>'ER','suka'=>'สุขาภิบาล')); ?>
 </div>
     <div class="form-group">
                     <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary', 'name' => 'rent']) ?>

@@ -1,4 +1,4 @@
 <?php
 
-header('location: frontend/web/index.php?r=gis');
+header('location: frontend/web');
 ?>
