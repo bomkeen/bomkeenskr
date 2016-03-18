@@ -36,6 +36,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'ระบบข่าว', 'url' => ['/pr']],
           ['label' => 'Frontend','url'=>\Yii::$app->urlManagerFrontend->baseUrl],
     ];
     

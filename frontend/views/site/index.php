@@ -1,19 +1,19 @@
-<?php
 
-/* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
-?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h2>โรงพยาบาลสมเด็จพระสังฆราช (วาสนมหาเถระ)</h2>
-
+<div class="page-header"></div>
+<div class="row">
+    <div class="col-md-6">
+      
+                     <div class="list-group">
+  <a href="#" class="list-group-item active">
+    ข่าวประกาศ
+  </a>
+             <?php foreach ($model as $model_rs){ ?>           
+  <a href='<?php echo $model_rs['pr_link']?>' class="list-group-item"><?php echo $model_rs['pr_desc']?></a>
+             <?php } ?>
+  
+</div>
+        
     </div>
-
-    <div class="body-content">
-
-     
-
-    </div>
+    
 </div>
