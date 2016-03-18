@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
   
   <a href="<?= \yii\helpers\Url::to(['/reportncd/htdmdiag']) ?>" class="list-group-item">จำนวนผู้ป่วยโรคเรื้อรังและโรคร่วม</a>
   <a href="<?= \yii\helpers\Url::to(['/reportncd/htdetail']) ?>" class="list-group-item">ภาพรวมการให้บริการคลินิคความดันโลหิตสูง HT Deatil</a>
+  <a href="<?= \yii\helpers\Url::to(['/reportncd/dmdetail']) ?>" class="list-group-item">ภาพรวมการให้บริการคลินิคเบาหวาน DM Deatil</a>
   
 </div>
         </div>
