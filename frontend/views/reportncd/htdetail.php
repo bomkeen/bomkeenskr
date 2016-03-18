@@ -65,18 +65,38 @@ include_once '../../inc/thaidate.php';
     </div>
 </div>
 <br>
-<?php if (isset($rsht)) { ?>
+<?php if (isset($lab)) { ?>
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <table class="table table-hover">
                 <tr class="bg-success">
-                <th><center>ลำดับ</center></th><th><center>รายการ</center></th>
+                <th><center>รายการ</center></th>
                 <th><center>คน</center></th><th><center>ครั้ง</center></th>
                 </tr>
+                  <?php foreach ($lab as $lab_rs){ ?>
                 <tr>
-                <td>ลำดับ</td><td>รายการ</td>
-                <td><center>คน</center></td><td><center>ครั้ง</center></td>
+               <td><?php echo $lab_rs['name']; ?></td>
+                <td><center><?php echo $lab_rs['man']; ?></center></td><td><center><?php echo $lab_rs['n']; ?></center></td>
                 </tr>
+                  <?php } ?>
+                <tr>
+                    <th colspan="3"><center>ผู้ป่วยความดันโลหิต ที่ได้รับการคัดกรองการทำงานของไต (eGFR)</center></th>
+                </tr>
+                 <?php foreach ($egfr as $egfr_rs){ ?>
+                <tr>
+               <td><?php echo $egfr_rs['name']; ?></td>
+                <td><center>-</center></td><td><center><?php echo $egfr_rs['n']; ?></center></td>
+                </tr>
+                  <?php } ?>
+                <tr>
+                    <th colspan="3"><center>งานติดตามดูแลผู้ป่วยความดันโลหิตสูง ตามปิงปอง 7 สี</center></th>
+                </tr>
+                <?php foreach ($ping as $ping_rs){ ?>
+                <tr>
+               <td><?php echo $ping_rs['name']; ?></td>
+                <td><center><?php echo $ping_rs['man']; ?></center></td><td><center><?php echo $ping_rs['n']; ?></center></td>
+                </tr>
+                  <?php } ?>
             </table>
 
         </div>

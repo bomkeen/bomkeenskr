@@ -124,10 +124,200 @@ class ReportncdController extends \yii\web\Controller {
             $date1 = $request->post('date1');
             $date2 = $request->post('date2');
             $export = $request->post('export');
-            return $this->render('htdetail', [
+            $labsql="select 'ผู้ป่วยความดันโลหิตรายใหม่' as name,count(distinct vn.hn) as man,count(vn.vn) as n from vn_stat vn 
+inner join clinicmember cm on vn.hn=cm.hn 
+where vn.vstdate BETWEEN '$date1' and '$date2'
+AND cm.begin_year=(YEAR(NOW())+543)
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูงที่รับบริการทั้งหมด' as name,count(distinct vn.hn) as man,count(vn.vn) as n from ovst vn 
+inner join clinicmember cm on vn.hn=cm.hn 
+where vn.vstdate BETWEEN '$date1' and '$date2'
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วย HT ควบคุมระดับความดันได้ 140/90 mmHg' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn inner join opdscreen op on vn.vn=op.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+and op.bps <140 and op.bpd <90
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ FBS' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code =659 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ Lipid Profile'  as name,count(distinct vn.hn) as man ,count(DISTINCT lo.lab_order_number) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+JOIN lab_items li on lo.lab_items_code=li.lab_items_code
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and li.lab_items_code in (102,103,91,92,211) 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ LDL (รวมในกลุ่ม Lipid ด้วย)' as name,count(distinct vn.hn) as man ,count(DISTINCT lo.lab_order_number) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+JOIN lab_items li on lo.lab_items_code=li.lab_items_code
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and li.lab_items_code in (92,211) 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ LDL (รวมในกลุ่ม Lipid ด้วย < 100 mg/dl)' as name,count(distinct vn.hn) as man ,count(DISTINCT lo.lab_order_number) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+JOIN lab_items li on lo.lab_items_code=li.lab_items_code
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and li.lab_items_code in (92,211)
+AND lo.lab_order_result <100  
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ Urine Microalbumine' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code =704 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ Urine Macroalbumine' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code =188 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+	select 'ผู้ป่วยความดันโลหิตสูง มีสภาวะ Albuminuria Positive' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code in (704,188) AND lo.lab_order_result LIKE '%po%' 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิต ได้รับการตรวจ  Albuminuria ผล Positive ได้รับยา ACEI/ARB' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+JOIN opitemrece op on vn.vn=op.vn
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code in (704,188) 
+AND lo.lab_order_result LIKE '%po%'
+and op.icode in (1460151,1000122,1520008)
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'ผู้ป่วยความดันโลหิตสูง ได้รับการตรวจ Cr' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  join lab_head lh on vn.vn=lh.vn 
+  join lab_order lo on lh.lab_order_number=lo.lab_order_number 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  and lo.lab_items_code =78 
+  and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)";
+            $egfrsql="select 'Kidney Damage with Normal or increased eGFR >= 90' as name,count(distinct vn.hn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  JOIN ovst_gfr AS gfr on vn.vn=gfr.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2' and gfr.ckd_epi >=90 
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'Kidney Damage with Mild decreased eGFR 60-89' as name,count(distinct vn.hn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  JOIN ovst_gfr AS gfr on vn.vn=gfr.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2' and gfr.ckd_epi between '60' AND '89' 
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'Moderate decreased 30-59' as name,count(distinct vn.hn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  JOIN ovst_gfr AS gfr on vn.vn=gfr.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2' and gfr.ckd_epi between '30' AND '59' 
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'Severe decreased 15-29' as name,count(distinct vn.hn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  JOIN ovst_gfr AS gfr on vn.vn=gfr.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2' and gfr.ckd_epi between '15' AND '29' 
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
+UNION
+select 'Kidney Failure GFR <15' as name,count(distinct vn.hn) as n from vn_stat vn 
+  join clinicmember cm on vn.hn=cm.hn 
+  JOIN ovst_gfr AS gfr on vn.vn=gfr.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2' and gfr.ckd_epi < '15'
+and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)";
+            $pingsql="select 'สีเขียว BP<= 139/89 mmHg' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  inner join opdscreen op on vn.vn=op.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  AND vn.hn  not in (SELECT hn FROM clinicmember WHERE clinic ='001') 
+  AND vn.hn in (SELECT hn FROM clinicmember WHERE clinic ='002') 
+ and op.bps <139 and op.bpd <89
+UNION
+select 'สีเหลือง BP<= 140/90 - 159/99 mmHg' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  inner join opdscreen op on vn.vn=op.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  AND vn.hn  not in (SELECT hn FROM clinicmember WHERE clinic ='001') 
+  AND vn.hn in (SELECT hn FROM clinicmember WHERE clinic ='002') 
+   and op.bps between '140' and '159' and op.bpd between '90' and '99'
+UNION
+select 'สีส้ม  BP<= 160/100 - 179/109 mmHg' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  inner join opdscreen op on vn.vn=op.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  AND vn.hn  not in (SELECT hn FROM clinicmember WHERE clinic ='001') 
+  AND vn.hn in (SELECT hn FROM clinicmember WHERE clinic ='002') 
+    and op.bps between '160' and '179' and op.bpd between '100' and '109'
+UNION
+select 'สีแดง  BP>= 180/110 mmHg' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  inner join opdscreen op on vn.vn=op.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  AND vn.hn  not in (SELECT hn FROM clinicmember WHERE clinic ='001') 
+  AND vn.hn in (SELECT hn FROM clinicmember WHERE clinic ='002') 
+    and op.bps >= '180' and op.bpd >='110'
+UNION
+select 'สีดำ ผู้ป่วยที่มีภาวะแทรกซ้แน สทอง หัวใจ หลอดเลือด ไต' as name,count(distinct vn.hn) as man ,count(vn.vn) as n from vn_stat vn 
+  inner join ovstdiag ov on vn.vn=ov.vn 
+  where vn.vstdate BETWEEN '$date1' and '$date2'
+  AND vn.hn  not in (SELECT hn FROM clinicmember WHERE clinic ='001') 
+  AND vn.hn in (SELECT hn FROM clinicmember WHERE clinic ='002') 
+  and ov.icd10 in ('I64','E112','N083','I259')";
+            $lab = \Yii::$app->hosxpslave->createCommand("$labsql")->queryAll();
+            $egfr = \Yii::$app->hosxpslave->createCommand("$egfrsql")->queryAll();
+             $ping = \Yii::$app->hosxpslave->createCommand("$pingsql")->queryAll();
+           ///////////////////   PDF   ////////////////////////////////////////////            
+//
+            if ($export == 'pdf') {
+                $content = $this->renderPartial('htdetail', [
                         'date1' => $date1,
                         'date2' => $date2,
+                'lab'=>$lab,
+                'egfr'=>$egfr,
+                'ping'=>$ping,
             ]);
+                $pdf = new Pdf([
+                    'mode' => Pdf::MODE_CORE,
+                    'content' => $content,
+                    'options' => ['title' => 'ภาพรวมการให้บริการคลินิคความดันโลหิตสูง HT Deatil'],
+                    'methods' => [
+                        'SetHeader' => ['ภาพรวมการให้บริการคลินิคความดันโลหิตสูง HT Deatil'],
+                        'SetFooter' => ['{PAGENO}'],
+                    ]
+                ]);
+                return $pdf->render();
+            }
+            //////////////////////////////////////////////////       
+            else {
+             
+             return $this->render('htdetail', [
+                        'date1' => $date1,
+                        'date2' => $date2,
+                'lab'=>$lab,
+                'egfr'=>$egfr,
+                'ping'=>$ping,
+            ]);
+             
+        }
         } else {
             return $this->render('htdetail', [
                         'date1' => $date1,
