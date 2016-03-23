@@ -164,3 +164,25 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="container">
+        <div class="col-md-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    ส่งเสริมสุขภาพ
+                </div>
+                <div class="panel-body">
+                    <h4>งานส่งเสริมสุขภาพ </h4>
+                    <h5>วันที่ <?php echo $date; ?></h5>
+                    <h4>------</h4>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-success glyphicon glyphicon-file" href="<?= \yii\helpers\Url::to(['/reportfp']) ?>"> ข้อมุลเพิ่มเติม</a>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
