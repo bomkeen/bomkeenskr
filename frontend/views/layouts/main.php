@@ -41,6 +41,7 @@ AppAsset::register($this);
         ['label' => 'โปรแกรมบันทึกวันอบรม', 'url' => 'http://192.168.1.161/tm','linkOptions' => ['target' => '_blank']],
         ['label' => 'โปรแกรม Chronic Link', 'url' => 'http://203.157.126.45/ncd/chronic/index.php','linkOptions' => ['target' => '_blank']],
         ['label' => 'ต้น Chart', 'url' => ['/chart']],
+        ['label' => 'บันทึกการทำงาน', 'url' => ['/job']],    
             ['label' => 'แผนการจัดซื้อ', 'url' =>'http://192.168.1.253/office','linkOptions' => ['target' => '_blank']],
       ['label' => 'backend', 'url'=>\Yii::$app->urlManagerBackend->baseUrl],
 Yii::$app->user->isGuest ?
