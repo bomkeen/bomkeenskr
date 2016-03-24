@@ -1,14 +1,15 @@
 <?php
 
 namespace frontend\controllers;
-
+use kartik\mpdf\Pdf;
 use yii;
 ?>
 <?php
 
 class ReportfpController extends \yii\web\Controller {
-
-    public function actionIndex() {
+  public $enableCsrfValidation = false;
+   
+  public function actionIndex() {
         return $this->render('index');
     }
 
@@ -22,12 +23,12 @@ class ReportfpController extends \yii\web\Controller {
             $export = $request->post('export');
             $vac_in_sql = "SELECT COUNT(*) as n,pv.vaccine_name as name FROM person_vaccine_list AS pvl 
 JOIN person_vaccine pv ON pvl.person_vaccine_id=pv.person_vaccine_id
-WHERE pvl.vaccine_date BETWEEN $date1 and $date2
+WHERE pvl.vaccine_date BETWEEN '$date1' and '$date2'
 GROUP BY pvl.person_vaccine_id ";
-            $vac_out_sql = "SELECT COUNT(*) as n,vaccine_name FROM ovst_vaccine opv
+            $vac_out_sql = "SELECT COUNT(*) as n,vaccine_name as name FROM ovst_vaccine opv
 JOIN person_vaccine pv ON opv.person_vaccine_id=pv.person_vaccine_id
 JOIN ovst ov ON opv.vn=ov.vn
-WHERE ov.vstdate BETWEEN '2015-10-01' and '2015-10-31'
+WHERE ov.vstdate BETWEEN '$date1' and '$date2'
 GROUP BY opv.person_vaccine_id";
 
             $vac_in = \Yii::$app->hosxpslave->createCommand("$vac_in_sql")->queryAll();

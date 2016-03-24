@@ -27,7 +27,8 @@
 "kartik-v/yii2-export": "*",
 "kartik-v/yii2-mpdf": "*",
 "yiisoft/yii2-jui": "~2.0.0",
-        "dektrium/yii2-user": "0.9.*@dev"
+        "dektrium/yii2-user": "0.9.*@dev",
+        "rmrevin/yii2-fontawesome": "2.10.*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

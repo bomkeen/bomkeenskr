@@ -67,8 +67,8 @@ include_once '../../inc/thaidate.php';
 <br>
 <?php if (isset($vac_in)) { ?>
     <div class="row">
-        <div class="col-md-12 col-md-offset-0">
-            <table class="table table-hover">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table">
                 <tr class="bg-success">
                 <th><center>รายการ</center></th>
                 <th><center>ครั้ง</center></th>
@@ -85,18 +85,17 @@ include_once '../../inc/thaidate.php';
                 <tr>
                     <th colspan="2"><center>Vaccine นอกแผน</center></th>
                 </tr>
-                <?php foreach ($vac_in as $vac_in_rs){ ?>
+                <?php foreach ($vac_out as $vac_out_rs){ ?>
                 <tr>
                <td><?php echo $vac_out_rs['name']; ?></td>
                 <td><center><?php echo $vac_out_rs['n']; ?></center></td>
                 </tr>
                   <?php } ?>
-                
-            
             </table>
 
         </div>
     </div>
 <?php } ?>
+
 
 
