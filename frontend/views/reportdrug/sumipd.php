@@ -1,8 +1,8 @@
 <?php
 use kartik\grid\GridView;
-$this->title = 'จำนวนการให้บริการแยกตามหัตการ';
+$this->title = '20 อันดับจำนวนมูลค่ายา IPD';
 $this->params['breadcrumbs'][] = ['label' => 'ระบบรายงาน', 'url' => ['report/index']];
-$this->params['breadcrumbs'][] = ['label' => 'ระบบรายงานทันตกรรม', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ระบบรายงานห้องยา', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 include_once '../../inc/thaidate.php';
 ?>
@@ -56,17 +56,18 @@ include_once '../../inc/thaidate.php';
 </div>
 </div>
 
-<?php if(isset($dataProvider)) { ?>
+<?php 
+if(isset($dataProvider)) { ?>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
         <?= GridView::widget([
     'dataProvider' => $dataProvider,
-            'showPageSummary' => true,
+    'showPageSummary' => true,
     'panel'=>[
             'before' => 'ข้อมูลหระหว่างวันที่   '.thaidate($date1) .'    ถึง    '.thaidate($date2),
     ],
     'columns' => [
-        [
+           [
     'class'=>'kartik\grid\SerialColumn',
     'contentOptions'=>['class'=>'kartik-sheet-style'],
     'width'=>'36px',
@@ -74,24 +75,26 @@ include_once '../../inc/thaidate.php';
     'headerOptions'=>['class'=>'kartik-sheet-style']
 ],
         [
-            'attribute' => 'name',
-            'label' => 'รายการที่ให้บริการ',
+            'attribute' => 'dname',
+            'label' => 'ขนานยา',
             'pageSummary'=>'Total',
         ],
         [
-            'attribute'=>'hn',
+            'attribute'=>'person',
             'label'=>'จำนวนคน',
             'pageSummary'=>true
         ],
         [
-            'attribute'=>'vn',
+            'attribute'=>'rx',
             'label'=>'จำนวนครั้ง',
             'pageSummary'=>true
         ],
-     
-        
-    
-    ],
+        [
+            'attribute'=>'price',
+            'label'=>'จำนวนเงิน',
+            'pageSummary'=>true
+        ]
+     ],
 ]); ?>
     </div>
 </div>

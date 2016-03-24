@@ -98,6 +98,46 @@ BETWEEN '$date1' and '$date2' GROUP BY v.icd10,i.name ORDER BY n DESC LIMIT 20";
         ]);
         
     }
+    
+     public function actionOpdratio() {
+         $date1="2014-10-01";
+            $date2="2015-09-31";
+        if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request;
+            $year=$request->post('year');
+            $date1=((int) $year - 1).'-10-01';
+            $date2 = $year.'-9-30';
+          $m = \Yii::$app->hosxpslave->createCommand("SELECT ov.vstdate as m from ovst ov WHERE ov.vstdate  
+              BETWEEN '$date1' and '$date2'
+GROUP BY MONTH(ov.vstdate) ORDER BY ov.vstdate")->queryAll();  
+          //จำนวนคน
+          $man_m=\Yii::$app->hosxpslave->createCommand("SELECT COUNT(DISTINCT hn) as cc FROM ovst o 
+WHERE o.vstdate BETWEEN '$date1' and '$date2'
+GROUP BY MONTH(o.vstdate) ORDER BY o.vstdate")->queryAll();
+          $man=\Yii::$app->hosxpslave->createCommand("SELECT COUNT(DISTINCT hn) as cc FROM ovst o 
+WHERE o.vstdate BETWEEN '$date1' and '$date2' ")->queryAll(); 
+          $n_m=\Yii::$app->hosxpslave->createCommand("SELECT COUNT(vn) as cc FROM ovst o 
+WHERE o.vstdate BETWEEN '$date1' and '$date2'
+GROUP BY MONTH(o.vstdate) ORDER BY o.vstdate")->queryAll();
+          $n=\Yii::$app->hosxpslave->createCommand("SELECT COUNT(vn) as cc FROM ovst o 
+WHERE o.vstdate BETWEEN '$date1' and '$date2' ")->queryAll(); 
+              
+        return $this->render('opdratio',[
+          
+            'date1'=>$date1,
+            'date2'=>$date2,
+            'man'=>$man,
+            'man_m'=>$man_m,
+            'm'=>$m,
+            'n'=>$n,
+            'n_m'=>$n_m,
+                              
+        ]);
+        }
+ else {
+            return $this->render('opdratio');
+ }
+    }
 
 }
 ?>

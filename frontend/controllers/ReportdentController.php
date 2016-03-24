@@ -21,7 +21,7 @@ class ReportdentController extends \yii\web\Controller
             $date1 = $request->post('date1');
             $date2 = $request->post('date2');
              $sql="SELECT 
-dt.dental_care_type_name
+dt.dental_care_type_name as name
 ,COUNT(d.vn) as sum 
 from dental_care d
 inner JOIN ovst ov on d.vn=ov.vn 

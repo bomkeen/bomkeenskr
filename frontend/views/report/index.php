@@ -140,7 +140,7 @@ use yii\bootstrap\ActiveForm;
                     <h4> ข้อมูลระบบงานยา</h4>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-success glyphicon glyphicon-file" href="http://192.168.1.161:8080/hosxpwebreport/mySelectreport.action?GOID=38&MGROUP=002"> ข้อมูลเพิ่มเติม</a>
+                    <a class="btn btn-success glyphicon glyphicon-file" href="<?= \yii\helpers\Url::to(['/reportdrug']) ?>"> ข้อมูลเพิ่มเติม</a>
 
                 </div>
             </div>
@@ -157,7 +157,7 @@ use yii\bootstrap\ActiveForm;
                     <h4> ข้อมูลระบบงานLab</h4>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-success glyphicon glyphicon-file" href="http://192.168.1.161:8080/hosxpwebreport/mySelectreport.action?GOID=38&MGROUP=002"> ข้อมูลเพิ่มเติม</a>
+                    <a class="btn btn-success glyphicon glyphicon-file" href=""> ข้อมูลเพิ่มเติม</a>
 
                 </div>
             </div>

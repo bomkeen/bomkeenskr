@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="list-group">
   
   <a href="<?= \yii\helpers\Url::to(['/reportdent/detail']) ?>" class="list-group-item">สรุปข้อมูลทันตกรรมตามช่วงเวลา</a>
-  <a href="<?= \yii\helpers\Url::to(['/reportdent/dttm']) ?>" class="list-group-item">รายงานสถิติผู้ป่วยใน (IPD Ratio)</a>
+  <a href="<?= \yii\helpers\Url::to(['/reportdent/dttm']) ?>" class="list-group-item">สรุปdการให้บริการแยกตามหัตการ</a>
+ 
   
 </div>
         </div>
