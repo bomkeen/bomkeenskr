@@ -157,7 +157,7 @@ use yii\bootstrap\ActiveForm;
                     <h4> ข้อมูลระบบงานLab</h4>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-success glyphicon glyphicon-file" href=""> ข้อมูลเพิ่มเติม</a>
+                    <a class="btn btn-success glyphicon glyphicon-file" href="<?= \yii\helpers\Url::to(['/reportlab']) ?>"> ข้อมูลเพิ่มเติม</a>
 
                 </div>
             </div>

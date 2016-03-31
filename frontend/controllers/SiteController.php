@@ -73,7 +73,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model=  Pr::find()->where(['status'=>'Y'])->all();
+        $model=  Pr::find()->where(['status'=>'Y'])->orderBy([
+	       //'usertype'=>SORT_ASC,
+	       'pr_date_insert' => SORT_DESC,
+		])->all();
         return $this->render('index',[
             'model'=>$model,
         ]);

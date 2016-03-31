@@ -39,10 +39,14 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'โปรแกรมระบบงาน','items'=>[
         ['label' => 'โปรแกรมบันทึกวันอบรม', 'url' => 'http://192.168.1.161/tm','linkOptions' => ['target' => '_blank']],
+        ['label' => 'บันทึกการทำงาน', 'url' => ['job'], 'visible' => !Yii::$app->user->isGuest],
         ['label' => 'โปรแกรม Chronic Link', 'url' => 'http://203.157.126.45/ncd/chronic/index.php','linkOptions' => ['target' => '_blank']],
-        ['label' => 'ต้น Chart', 'url' => ['/chart'],
-        ['label' => 'บันทึกการทำงาน', 'url' => ['/job'], 'visible' =>Yii::$app->user->isGuest]],    
-            ['label' => 'แผนการจัดซื้อ', 'url' =>'http://192.168.1.253/office','linkOptions' => ['target' => '_blank']],
+        ['label' => 'ค้น Chart', 'url' => ['/chart']],
+                  
+    ['label'=>'บันทึกการทำงาน','items'=>[
+      ['label' => 'บันทึกการทำงาน', 'url' => ['/job/index']],  
+    ],'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'แผนการจัดซื้อ', 'url' =>'http://192.168.1.253/office','linkOptions' => ['target' => '_blank']],
       ['label' => 'backend', 'url'=>\Yii::$app->urlManagerBackend->baseUrl],
 Yii::$app->user->isGuest ?
 ['label' => 'ลงชื่อใช้งาน', 'url' => ['/user/security/login']] :
@@ -54,8 +58,12 @@ Yii::$app->user->isGuest ?
 ['label' => 'สมัครเข้าใช้งาน', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
     
 ]],
+  
+        
+        
         ['label' => 'ข้อมูล 43 แฟ้ม', 'url' => 'http://192.168.1.161/somdej/43_main.php','linkOptions' => ['target' => '_blank']],
-        ['label' => 'GIS', 'url' => ['/gis']],
+        ['label' => 'HDC', 'url' => 'http://203.157.126.32/hdc/main/index.php','linkOptions' => ['target' => '_blank']],
+ ['label' => 'GIS', 'url' => ['/gis']],
         ['label' => 'ระบบรายงาน', 'url' => ['/report']],
         ['label' => 'ระบบเอกสาร', 'url' =>'http://192.168.1.161/document_center','linkOptions' => ['target' => '_blank']],
         ['label' => 'ระบบความเสี่ยง', 'url' =>'http://192.168.1.161/risk','linkOptions' => ['target' => '_blank']],

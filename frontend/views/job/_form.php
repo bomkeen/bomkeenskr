@@ -9,11 +9,12 @@ use yii\helpers\ArrayHelper;
 /* @var $model common\models\Job */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<div class="col-md-8 col-md-offset-2">
 <div class="job-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+ 
+        
     <?= $form->field($model, 'job_dep_id')->dropDownList(
                     ArrayHelper::map(JobDep::find()->all(), 'job_dep_id', 'job_dep_name'), ['prompt' => 'เลือกหน่วยงาน']
             )
@@ -30,7 +31,7 @@ use yii\helpers\ArrayHelper;
         'language'=>'th'
     ]
 ]);?>
-
+   
     <?= $form->field($model, 'job_status')->radioList(array('Y'=>'Done','N'=>'Wait')); ?>
 
     <?= $form->field($model, 'job_price')->textInput(['maxlength' => true]) ?>
@@ -52,4 +53,5 @@ use yii\helpers\ArrayHelper;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>

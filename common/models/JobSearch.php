@@ -12,9 +12,7 @@ use common\models\Job;
  */
 class JobSearch extends Job
 {
-    /**
-     * @inheritdoc
-     */
+    public $jobdep;
     public function rules()
     {
         return [
@@ -45,7 +43,7 @@ class JobSearch extends Job
         $query = Job::find();
 
         //////////////////////////
-        $query->joinWith(['jobdep']);
+        $query->joinWith('jobdep');
         ////////////////////////////
         
         $dataProvider = new ActiveDataProvider([
@@ -53,12 +51,14 @@ class JobSearch extends Job
         ]);
         
    //////////////////////////////////////////////
-    $dataProvider->sort->attributes['jobdep'] = [
-        'asc' => ['tbl_jobdep.job_dep_name' => SORT_ASC],
-        'desc' => ['tbl_jobdep.job_dep_name' => SORT_DESC],
+       $dataProvider->sort->attributes['jobdep'] = [
+        'asc' => ['jobdep.job_dep_name' => SORT_ASC],
+        'desc' => ['jobdep.job_dep_name' => SORT_DESC],
     ];
   ///////////////////////////////////////////////      
-
+    if (!($this->load($params) && $this->validate())) {
+        return $dataProvider;
+    }
         $this->load($params);
 
         if (!$this->validate()) {
@@ -73,12 +73,9 @@ class JobSearch extends Job
             'job_date' => $this->job_date,
             'job_price' => $this->job_price,
             'job_done_date' => $this->job_done_date,
-        ]);
-
-        $query->andFilterWhere(['like', 'job_dep_desc', $this->job_dep_desc])
-            ->andFilterWhere(['like', 'job_status', $this->job_status])
+        ])
 /////////////////////////////////////////////////
-                ->andFilterWhere(['like', 'tbl_jobdep.job_dep_name', $this->jobdep]);
+      ->andFilterWhere(['like', 'tbl_jobdep.job_dep_name', $this->jobdep]);
     ///////////////////////////////////////////
         return $dataProvider;
     }

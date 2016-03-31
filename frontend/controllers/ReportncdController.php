@@ -126,8 +126,8 @@ class ReportncdController extends \yii\web\Controller {
             $export = $request->post('export');
             $labsql = "select 'ผู้ป่วยความดันโลหิตรายใหม่' as name,count(distinct vn.hn) as man,count(vn.vn) as n from vn_stat vn 
 inner join clinicmember cm on vn.hn=cm.hn 
-where vn.vstdate BETWEEN '$date1' and '$date2'
-AND cm.begin_year=(YEAR(NOW())+543)
+where cm.regdate BETWEEN '$date1' and '$date2'
+AND cm.begin_year BETWEEN ((YEAR(NOW())+543)-1) AND (YEAR(NOW())+543)
 and cm.clinic=002 AND cm.hn not in (select hn from clinicmember WHERE clinic=001)
 UNION
 select 'ผู้ป่วยความดันโลหิตสูงที่รับบริการทั้งหมด' as name,count(distinct vn.hn) as man,count(vn.vn) as n from ovst vn 
@@ -334,10 +334,10 @@ select 'สีดำ ผู้ป่วยที่มีภาวะแทร�
             $date1 = $request->post('date1');
             $date2 = $request->post('date2');
             $export = $request->post('export');
-            $labsql = "select 'ผู้ป่วยเบาหวานรายใหม่' as name,count(distinct vn.hn) as man,count(vn.vn) as n from vn_stat vn 
+            $labsql = "select 'ผู้ป่วยความดันโลหิตรายใหม่' as name,count(distinct vn.hn) as man,count(vn.vn) as n from vn_stat vn 
 inner join clinicmember cm on vn.hn=cm.hn 
-where vn.vstdate BETWEEN '$date1' and '$date2'
-AND cm.begin_year=(YEAR(NOW())+543)
+where cm.regdate BETWEEN '$date1' and '$date2'
+AND cm.begin_year BETWEEN ((YEAR(NOW())+543)-1) AND (YEAR(NOW())+543)
 and cm.clinic=001 
 UNION
 select 'ผู้ป่วยโรคเบาหวานรับบริการทั้งหมด' as name,count(distinct vn.hn) as man,count(vn.vn) as n from ovst vn 
